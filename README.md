@@ -1,20 +1,18 @@
-# reddit-api-texts
+# olympic-ticket-tracker
 
 
-reddit-api-texts texts new posts to you from you desired subreddit every day at 12 PM PST.
+olympic-ticket-tracker will check for Olympics ticket availability and prices, and will text you relevant info every day at 12 PM PST.
 
 
 ## Deployment
 
-reddit-api-texts is hosted on Heroku and uses mLab with MongoDB for the database.
+olympic-ticket-tracker will be hosted on Heroku.
 
 ## Built With
 
 * [Node.js](https://nodejs.org/en/) - The open source server environment used.
 * [Express](https://expressjs.com/) - The web application framework used.
-* [MongoDB](https://www.mongodb.com/) - The document-based database system used.
 * [Twilio](https://www.twilio.com/) - Twilio API used to send texts.
-* [reddit API](https://www.reddit.com/dev/api/) - reddit API used to get titles and links of posts.
 
 <!-- ## Contributing
 
