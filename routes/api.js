@@ -37,7 +37,7 @@ let sports = [
 
 let totalMessage = "";
 
-router.get("/", function (req, res) {
+router.get("/api/scrape-olympics", function (req, res) {
     let i = 0;
 
     let allResults = [];
@@ -132,6 +132,10 @@ router.get("/", function (req, res) {
 
 
 
+});
+
+router.get("/api/", function (req, res) {
+    res.send("All good.")
 });
 
 
