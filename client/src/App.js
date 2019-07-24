@@ -2,17 +2,31 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-function minsToNoon(){
+function timeToNextNoon(){
   var d = new Date();
-  return (-d + d.setHours(24,0,0,0))/6e4;
-}
+  let minutesLeft = (-d + d.setHours(12,0,0,0))/6e4;
+  if (minutesLeft < 0) {
+    minutesLeft += 1440;
+  }
+  let hoursLeft = Math.floor(minutesLeft / 60);
+  let hoursDecimal = (minutesLeft / 60) - hoursLeft;
+  let minutePortion = Math.floor(hoursDecimal * 60);
 
-console.log(minsToNoon());
+  let message = "";
+
+  if (hoursLeft !== 0) {
+    message += hoursLeft + " hours and ";
+  }
+
+  message += minutePortion + " minutes remaining until the next text.";
+
+  return message;
+}
 
 class App extends Component {
 
   render() {
-    let timeLeft = minsToNoon();
+    let message = timeToNextNoon();
     return (
       <div className="App">
         <div className="App-header">
@@ -20,7 +34,7 @@ class App extends Component {
           <h2>Welcome to Olymkets</h2>
         </div>
         <p className="App-intro">
-          There are {timeLeft} minutes until noon, when the next text will be sent.
+          {message}
         </p>
       </div>
     );
