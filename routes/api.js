@@ -4,6 +4,10 @@ const axios = require("axios");
 var cheerio = require("cheerio");
 const client = require("twilio")(process.env.accountSid, process.env.authToken);
 
+const Discord = require('discord.js');
+const { prefix } = require('./../config.json');
+const dcClient = new Discord.Client();
+
 let sports = [
   {
     title: "Archery",
@@ -58,6 +62,7 @@ router.get("/api/scrape-olympics", function(req, res) {
 
   let allResults = [];
   let allSportsSoldOut = true;
+
 
   function scrapeSport(iterator) {
     axios.get(sports[iterator].url).then(function(response) {
@@ -123,6 +128,7 @@ router.get("/api/scrape-olympics", function(req, res) {
     });
 
     i++;
+
     let min = 5000;
     let max = 15000;
     let range = max - min;
@@ -135,6 +141,7 @@ router.get("/api/scrape-olympics", function(req, res) {
       }, randInterval);
     } else {
       setTimeout(() => {
+
         if (!allSportsSoldOut) {
           client.messages
             .create({
@@ -144,11 +151,25 @@ router.get("/api/scrape-olympics", function(req, res) {
             })
             .then(function(response) {})
             .done();
-          res.send(allResults);
+
+        dcClient.once('ready', () => {
+          const channel = dcClient.channels.get('603421256322121751');
+          try {
+          channel.send(totalMessage);            
+          }
+          catch(error) {
+            channel.send(console.error(error));
+          }
+        });
+        dcClient.login(process.env.DC_TOKEN);
+
         } else {
           console.log(totalMessage);
-          res.send(totalMessage);
         }
+
+
+        res.send(totalMessage);
+        
       }, min + max);
     }
   }
@@ -246,6 +267,16 @@ router.get("/api/noon-test", function(req, res) {
               })
               .then(function(response) {})
               .done();
+              dcClient.once('ready', () => {
+                const channel = dcClient.channels.get('603421256322121751');
+                try {
+                channel.send(totalMessage);            
+                }
+                catch(error) {
+                  channel.send(console.error(error));
+                }
+              });
+              dcClient.login(process.env.DC_TOKEN);
             res.send(allResults);
         }, min + max);
       }
