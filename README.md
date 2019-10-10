@@ -1,18 +1,19 @@
 # olympic-ticket-tracker
 
 
-olympic-ticket-tracker will check for Olympics ticket availability and prices, and will text you relevant info every day at 12 PM PST.
+olympic-ticket-tracker will check for Olympics ticket availability and prices every hour, and will text you if your desired tickets are available. Also, the same notification will be sent via a Discord bot to a specific channel.
 
 
 ## Deployment
 
-olympic-ticket-tracker will be hosted on Heroku.
+olympic-ticket-tracker is hosted on Heroku.
 
 ## Built With
 
 * [Node.js](https://nodejs.org/en/) - The open source server environment used.
 * [Express](https://expressjs.com/) - The web application framework used.
 * [Twilio](https://www.twilio.com/) - Twilio API used to send texts.
+* [discord.js](https://discord.js.org/#/) - A JavaScript library that makes using the Discord API easy.
 
 <!-- ## Contributing
 
