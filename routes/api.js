@@ -1,12 +1,18 @@
 const router = require("express").Router();
 const Post = require("../models/post.js");
 const axios = require("axios");
+const axiosCookieJarSupport = require('axios-cookiejar-support').default;
+const tough = require('tough-cookie');
 var cheerio = require("cheerio");
 const client = require("twilio")(process.env.accountSid, process.env.authToken);
 
 const Discord = require("discord.js");
 const { prefix } = require("./../config.json");
 const dcClient = new Discord.Client();
+
+const request = require('request');
+
+axiosCookieJarSupport(axios);
 
 let sports = [
   {
@@ -61,22 +67,26 @@ let sports = [
   }
 ];
 
-router.get("/api/sports", function(req, res) {
+router.get("/api/sports", function (req, res) {
   res.send(sports);
 });
 
 let totalMessage = "\n";
 
-router.get("/api/scrape-olympics", function(req, res) {
+router.get("/api/scrape-olympics", function (req, res) {
   let i = 0;
 
   let allResults = [];
   let allSportsSoldOut = true;
 
   function scrapeSport(iterator) {
-    axios.get(sports[iterator].url).then(function(response) {
+
+    request(sports[iterator].url, { json: true, jar: true }, (err, res, body) => {
+      if (err) { return console.log(err); }
       // Then, we load that into cheerio and save it to $ for a shorthand selector
-      var $ = cheerio.load(response.data);
+      var $ = cheerio.load(body);
+
+
 
       var results = {
         results: []
@@ -86,7 +96,7 @@ router.get("/api/scrape-olympics", function(req, res) {
       let sportIsAllSoldOut = true;
       let textMessage = "";
 
-      $(".session-info").each(function(i, element) {
+      $(".session-info").each(function (i, element) {
         // Save an empty result object
         var result = {};
         result.sportTitle = sportTitle;
@@ -104,7 +114,7 @@ router.get("/api/scrape-olympics", function(req, res) {
 
         let list = $(this).find("li.package");
 
-        list.each(function(i, element) {
+        list.each(function (i, element) {
           var ticketInfo = {};
           ticketInfo.category = $(this)
             .children("span.letter")
@@ -137,26 +147,26 @@ router.get("/api/scrape-olympics", function(req, res) {
 
       i++;
 
-      let min = 5000;
-      let max = 15000;
+      let min = 1000;
+      let max = 5000;
       let range = max - min;
       let randInterval = Math.random() * Math.floor(range) + min;
 
       console.log(randInterval);
       if (i < sports.length) {
-        setTimeout(function() {
+        setTimeout(function () {
           scrapeSport(i);
         }, randInterval);
       } else {
         setTimeout(() => {
-          if (!allSportsSoldOut) {
+          if (allSportsSoldOut === false) {
             client.messages
               .create({
                 body: totalMessage,
                 from: "***REMOVED***",
                 to: "***REMOVED***"
               })
-              .then(function(response) {})
+              .then(function (response) { })
               .done();
 
             dcClient.once("ready", () => {
@@ -168,29 +178,33 @@ router.get("/api/scrape-olympics", function(req, res) {
               }
             });
             dcClient.login(process.env.DC_TOKEN);
-          } else {
+          } else if (allSportsSoldOut === true) {
             console.log(totalMessage);
           }
 
-          res.send(totalMessage);
         }, min + max);
       }
+
     });
   }
 
   scrapeSport(i);
 });
 
-router.get("/api/noon-test", function(req, res) {
+router.get("/api/noon-test", function (req, res) {
   let i = 0;
 
   let allResults = [];
   let allSportsSoldOut = true;
 
   function scrapeSport(iterator) {
-    axios.get(sports[iterator].url).then(function(response) {
+
+    request(sports[iterator].url, { json: true, jar: true }, (err, res, body) => {
+      if (err) { return console.log(err); }
       // Then, we load that into cheerio and save it to $ for a shorthand selector
-      var $ = cheerio.load(response.data);
+      var $ = cheerio.load(body);
+
+
 
       var results = {
         results: []
@@ -200,7 +214,7 @@ router.get("/api/noon-test", function(req, res) {
       let sportIsAllSoldOut = true;
       let textMessage = "";
 
-      $(".session-info").each(function(i, element) {
+      $(".session-info").each(function (i, element) {
         // Save an empty result object
         var result = {};
         result.sportTitle = sportTitle;
@@ -218,7 +232,7 @@ router.get("/api/noon-test", function(req, res) {
 
         let list = $(this).find("li.package");
 
-        list.each(function(i, element) {
+        list.each(function (i, element) {
           var ticketInfo = {};
           ticketInfo.category = $(this)
             .children("span.letter")
@@ -250,38 +264,43 @@ router.get("/api/noon-test", function(req, res) {
       allResults.push(results);
 
       i++;
-      let min = 5000;
-      let max = 15000;
+
+      let min = 1000;
+      let max = 5000;
       let range = max - min;
       let randInterval = Math.random() * Math.floor(range) + min;
 
       console.log(randInterval);
       if (i < sports.length) {
-        setTimeout(function() {
+        setTimeout(function () {
           scrapeSport(i);
         }, randInterval);
       } else {
         setTimeout(() => {
-          client.messages
-            .create({
-              body: totalMessage,
-              from: "***REMOVED***",
-              to: "***REMOVED***"
-            })
-            .then(function(response) {})
-            .done();
-          dcClient.once("ready", () => {
-            const channel = dcClient.channels.get("***REMOVED***");
-            try {
-              channel.send(totalMessage);
-            } catch (error) {
-              channel.send(console.error(error));
-            }
-          });
-          dcClient.login(process.env.DC_TOKEN);
-          res.send(allResults);
+
+            client.messages
+              .create({
+                body: totalMessage,
+                from: "***REMOVED***",
+                to: "***REMOVED***"
+              })
+              .then(function (response) { })
+              .done();
+
+            dcClient.once("ready", () => {
+              const channel = dcClient.channels.get("***REMOVED***");
+              try {
+                channel.send(totalMessage);
+              } catch (error) {
+                channel.send(console.error(error));
+              }
+            });
+            dcClient.login(process.env.DC_TOKEN);
+          
+
         }, min + max);
       }
+
     });
   }
 
