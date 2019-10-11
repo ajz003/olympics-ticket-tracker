@@ -16,19 +16,9 @@ axiosCookieJarSupport(axios);
 
 let sports = [
   {
-    title: "Archery",
-    url:
-      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=2&excludesoldout=False"
-  },
-  {
     title: "Badminton",
     url:
       "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=6&excludesoldout=False"
-  },
-  {
-    title: "Beach Volleyball",
-    url:
-      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=8&excludesoldout=False"
   },
   {
     title: "Shooting",
@@ -54,6 +44,11 @@ let sports = [
     title: "Gymnastics - Trampoline",
     url:
       "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=24&excludesoldout=False"
+  },
+  {
+    title: "MODERN PENTATHLON",
+    url:
+      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=28&excludesoldout=False"
   },
   {
     title: "Tennis",
