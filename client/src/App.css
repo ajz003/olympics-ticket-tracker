@@ -1,24 +1,92 @@
+:root {
+  --tokyo-blue: #002063;
+  --tokyo-pink: #e50a84;
+  --olympic-blue: #0085C7;
+  --olympic-yellow: #F4C300;
+  --olympic-green: #009F3D;
+  --olympic-red: #DF0024;
+  --grey: #f4f4f4;
+}
+h1 {
+  font-size: 64px;
+}
+h2 {
+  font-size: 36px;
+}
+h3 {
+  font-size: 24px;
+}
+p {
+  line-height: 1.5;
+  font-size: 16px;
+}
+
 .App {
   text-align: center;
 }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  height: 200px;
+  padding: 10px;
+}
+
+.App-logo.spin-reverse {
+  animation: App-logo-spin-reverse infinite 20s linear;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
+  background-color: var(--tokyo-blue);
   padding: 20px;
   color: white;
+  min-height: calc(100vh - 88px);
 }
 
 .App-intro {
   font-size: large;
 }
 
+.grey-back {
+  background-color: var(--grey);
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@keyframes App-logo-spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+
+/* Extra small devices (portrait phones, less than 576px)
+/* No media query for `xs` since this is the default in Bootstrap
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .App-logo {
+    height: 400px;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .App-logo {
+    height: 500px;
+    padding: 10px 150px;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+
 }
