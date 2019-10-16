@@ -1,5 +1,9 @@
 import React, { Component } from "react";
+import Header from "./components/Header.js";
+import HomeSection from "./components/HomeSection.js";
 import logo from "./logo.svg";
+import miraitowa from "./assets/miraitowa.png";
+import someity from "./assets/someity.png";
 import "./App.css";
 
 function timeToNextNoon(){
@@ -18,10 +22,11 @@ function timeToNextNoon(){
     message += hoursLeft + " hours and ";
   }
 
-  message += minutePortion + " minutes remaining until the next text.";
+  message += minutePortion + " minutes remaining until noon (PST).";
 
   return message;
 }
+
 
 class App extends Component {
 
@@ -29,10 +34,18 @@ class App extends Component {
     let message = timeToNextNoon();
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to Olymkets</h2>
+        <div className="top-nav">
+          <Header />
         </div>
+        <div className="App-header">
+          <img src={miraitowa} className="App-logo" alt="logo" />
+          <img src={someity} className="App-logo spin-reverse" alt="logo" />
+          <h1>Welcome to Olymkets</h1>
+        </div>
+        <HomeSection 
+          backgroundColor="grey-back"
+          h2="What is Olymkets?"
+        />
         <p className="App-intro">
           {message}
         </p>
@@ -40,5 +53,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;
