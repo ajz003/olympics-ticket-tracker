@@ -1,0 +1,82 @@
+
+.top-nav {
+    width: 100%;
+    height: 88px;
+    color: var(--tokyo-blue);
+    background-color: #ffffff;
+  }
+
+.matter-container {
+  display: flex;
+  flex-direction: column;
+}
+.left-matter {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-logo {
+  padding: 10px;
+  height: 68px;
+}
+
+.nav-title {
+  padding: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  justify-content: center;
+  align-self: center;
+  font-size: 32px;
+  position: relative;
+}
+
+.by-line {
+  position: absolute;
+  font-size: 12px;
+  color: #4a4a4a;
+  top: 62px;
+}
+
+/* Extra small devices (portrait phones, less than 576px)
+/* No media query for `xs` since this is the default in Bootstrap
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .left-matter {
+    justify-content: left;
+  }
+  .nav-logo {
+    padding: 10px 20px;
+    height: 68px;
+  }
+  .by-line {
+    position: unset;
+  }
+  .matter-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .right-matter {
+    justify-content: right;
+    padding: 20px;
+    align-self: center;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+
+}
