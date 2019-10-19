@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Header from "./components/Header.js";
 import HomeSection from "./components/HomeSection.js";
+import Login from "./components/Login.js";
 import logo from "./logo.svg";
 import miraitowa from "./assets/miraitowa.png";
 import someity from "./assets/someity.png";
@@ -46,6 +47,7 @@ class App extends Component {
           backgroundColor="grey-back"
           h2="What is Olymkets?"
         />
+        <Login />
         <p className="App-intro">
           {message}
         </p>

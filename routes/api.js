@@ -5,6 +5,7 @@ const axiosCookieJarSupport = require('axios-cookiejar-support').default;
 const tough = require('tough-cookie');
 var cheerio = require("cheerio");
 const client = require("twilio")(process.env.accountSid, process.env.authToken);
+var passport = require('passport')
 
 const Discord = require("discord.js");
 const { prefix } = require("./../config.json");
@@ -273,25 +274,25 @@ router.get("/api/noon-test", function (req, res) {
       } else {
         setTimeout(() => {
 
-            client.messages
-              .create({
-                body: totalMessage,
-                from: "+16266584299",
-                to: "+18183891298"
-              })
-              .then(function (response) { })
-              .done();
+          client.messages
+            .create({
+              body: totalMessage,
+              from: "+16266584299",
+              to: "+18183891298"
+            })
+            .then(function (response) { })
+            .done();
 
-            dcClient.once("ready", () => {
-              const channel = dcClient.channels.get("603421256322121751");
-              try {
-                channel.send(totalMessage);
-              } catch (error) {
-                channel.send(console.error(error));
-              }
-            });
-            dcClient.login(process.env.DC_TOKEN);
-          
+          dcClient.once("ready", () => {
+            const channel = dcClient.channels.get("603421256322121751");
+            try {
+              channel.send(totalMessage);
+            } catch (error) {
+              channel.send(console.error(error));
+            }
+          });
+          dcClient.login(process.env.DC_TOKEN);
+
 
         }, min + max);
       }
@@ -302,33 +303,9 @@ router.get("/api/noon-test", function (req, res) {
   scrapeSport(i);
 });
 
-router.post('/auth', function(request, response) {
-	var username = request.body.username;
-	var password = request.body.password;
-	if (username && password) {
-		connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
-			if (results.length > 0) {
-				request.session.loggedin = true;
-				request.session.username = username;
-				response.redirect('/home');
-			} else {
-				response.send('Incorrect Username and/or Password!');
-			}			
-			response.end();
-		});
-	} else {
-		response.send('Please enter Username and Password!');
-		response.end();
-	}
-});
-
-router.get('/home', function(request, response) {
-	if (request.session.loggedin) {
-		response.send('Welcome back, ' + request.session.username + '!');
-	} else {
-		response.send('Please login to view this page!');
-	}
-	response.end();
-});
-
+router.post('/login', 
+  passport.authenticate('local-login', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('https://www.reddit.com/');
+  });
 module.exports = router;
