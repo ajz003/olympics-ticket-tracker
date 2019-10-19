@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
+var bodyParser = require("body-parser");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -9,8 +10,9 @@ require('dotenv').config();
 
 
 // Define middleware here
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false })); //For body parser
+app.use(bodyParser.json());
+app.use(express.static("public"));
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
