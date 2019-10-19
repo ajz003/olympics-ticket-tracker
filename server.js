@@ -8,6 +8,8 @@ const app = express();
 
 require('dotenv').config();
 
+var mysql = require('mysql');
+
 
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: false })); //For body parser
@@ -31,6 +33,23 @@ app.get("*", (req, res) => {
 // Connect to the Mongo DB
 
 // mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/csredditposts");
+
+var connection = mysql.createConnection(process.env.JAWSDB_URL || {
+  host     : 'localhost',
+  user     : 'root',
+  password : 'root',
+  database : 'sakila'
+});
+
+connection.connect(function(err) {
+  if (err) {
+    console.error('error connecting: ' + err.stack);
+    return;
+  }
+
+  console.log('connected as id ' + connection.threadId);
+
+});
 
 app.listen(PORT, () => {
   console.log(`🌎 ==> Server now on port ${PORT}!`);
