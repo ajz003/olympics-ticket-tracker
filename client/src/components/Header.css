@@ -4,11 +4,16 @@
     height: 88px;
     color: var(--tokyo-blue);
     background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
 .matter-container {
   display: flex;
-  flex-direction: column;
+
+      align-items: center;
+    justify-content: center;
 }
 .left-matter {
   display: flex;
@@ -38,6 +43,53 @@
   color: #4a4a4a;
   top: 62px;
 }
+
+.center-matter,
+.right-matter {
+  display: none;
+}
+
+.mobile-menu-container {
+  display: initial;
+}
+
+.menu-toggle {
+
+ opacity: 0;
+visibility: hidden;
+}
+.menu-toggle.open {
+ opacity: 1;
+ visibility: visible;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 100%;
+  z-index: 1;
+  background-color: red;
+opacity: 0;
+visibility: hidden;
+  transition: 0.5s;
+
+}
+.mobile-menu.open {
+  width: 100px;
+ opacity: 0.8;
+ visibility: visible;
+ 
+}
+
+.mobile-menu-ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+
 
 /* Extra small devices (portrait phones, less than 576px)
 /* No media query for `xs` since this is the default in Bootstrap
@@ -73,7 +125,17 @@
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-
+.center-matter,
+.right-matter {
+  display: initial;
+}
+.mobile-menu-container {
+  display: none;
+}
+.matter-container {
+  width: 100%;
+  justify-content: space-between;
+}
 
 }
 

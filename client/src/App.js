@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Home from "./components/Home.js";
 import Header from "./components/Header.js";
 import logo from "./logo.svg";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 import "./App.css";
 
@@ -40,13 +42,13 @@ class App extends Component {
     let message = timeToNextNoon();
     return (
       <Router>
+      <Header />
           <Route exact path="/">
-            <Header />
+
             <Home />
           </Route>
 
           <Route path="/about">
-            <Header />
           <h2>ABOUT</h2>
           <p className="App-intro">
               {message}
