@@ -303,9 +303,26 @@ router.get("/api/noon-test", function (req, res) {
   scrapeSport(i);
 });
 
+function loggedIn(req, res, next) {
+  if (req.user) {
+      next();
+  } else {
+      res.redirect('/login');
+  }
+}
+
+router.get('/ping', (req, res) => {
+  return res.send('pong')
+})
+
+router.get('/orders', loggedIn, function(req, res, next) {
+  // req.user - will exist
+  // load user orders and render them
+});
+
 router.post('/login', 
   passport.authenticate('local-login', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('https://www.reddit.com/');
+    res.redirect('/test');
   });
 module.exports = router;

@@ -6,7 +6,7 @@ var passport = require('passport')
 var flash    = require('connect-flash');
 var session = require('express-session');
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5000;
 const app = express();
 
 require('dotenv').config();
@@ -18,18 +18,16 @@ var mysql = require('mysql');
 app.use(bodyParser.urlencoded({ extended: false })); //For body parser
 app.use(bodyParser.json());
 app.use(passport.initialize());
-app.use(session({ secret: 'aNtCaRjOhJoS', resave: true, saveUninitialized: true })); // session secret
+app.use(require('express-session')({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+}));
 // Add the line below, which you're missing:
 require('./config/passport/passport');
 app.use(flash());
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
 
 
 app.use(express.static("public"));
@@ -44,9 +42,15 @@ app.use(routes);
 
 // Send every other request to the React app
 // Define any API routes before this runs
+
+app.get('/', function (req,res) {
+  res.send('Hello');
+});
+
 app.get("/login", (req, res) => {
   res.redirect("/");
 });
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });

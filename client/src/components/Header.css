@@ -28,6 +28,8 @@
   align-self: center;
   font-size: 32px;
   position: relative;
+  text-decoration: none;
+  color: var(--tokyo-blue);
 }
 
 .by-line {
