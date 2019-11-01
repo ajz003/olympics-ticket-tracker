@@ -31,6 +31,11 @@ let sports = [
       "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=1123&excludesoldout=False"
   },
   {
+    title: "Beach Volleyball",
+    url:
+      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=8&excludesoldout=False"
+  },
+  {
     title: "Gymnastics - Artistic",
     url:
       "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=22&excludesoldout=False"
@@ -121,7 +126,7 @@ router.get("/api/scrape-olympics", function (req, res) {
           if (ticketInfo.price !== "Sold Out" && sportIsAllSoldOut === true) {
             sportIsAllSoldOut = false;
             allSportsSoldOut = false;
-            textMessage += `${result.sportTitle} has tickets available at ${sports[iterator].url}!\n`;
+            textMessage += `${result.sportTitle} has tickets available at ${sports[iterator].url} !\n`;
           }
 
           result.info.push(ticketInfo);
@@ -239,7 +244,7 @@ router.get("/api/noon-test", function (req, res) {
           if (ticketInfo.price !== "Sold Out" && sportIsAllSoldOut === true) {
             sportIsAllSoldOut = false;
             allSportsSoldOut = false;
-            textMessage += `${result.sportTitle} has tickets available at ${sports[iterator].url}!\n`;
+            textMessage += `${result.sportTitle} has tickets available at ${sports[iterator].url} !\n`;
           }
 
           result.info.push(ticketInfo);
