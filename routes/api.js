@@ -1,4 +1,5 @@
 const router = require("express").Router();
+require('dotenv').config();
 const Post = require("../models/post.js");
 const axios = require("axios");
 const axiosCookieJarSupport = require('axios-cookiejar-support').default;
@@ -163,8 +164,8 @@ router.get("/api/scrape-olympics", function (req, res) {
             client.messages
               .create({
                 body: totalMessage,
-                from: "***REMOVED***",
-                to: "***REMOVED***"
+                from: process.env.TWILIO_NUMBER,
+                to: process.env.MY_NUMBER
               })
               .then(function (response) { })
               .done();
@@ -281,8 +282,8 @@ router.get("/api/noon-test", function (req, res) {
             client.messages
               .create({
                 body: totalMessage,
-                from: "***REMOVED***",
-                to: "***REMOVED***"
+                from: process.env.TWILIO_NUMBER,
+                to: process.env.MY_NUMBER
               })
               .then(function (response) { })
               .done();
