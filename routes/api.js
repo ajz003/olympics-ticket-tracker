@@ -164,14 +164,14 @@ router.get("/api/scrape-olympics", function (req, res) {
             client.messages
               .create({
                 body: totalMessage,
-                from: "***REMOVED***",
-                to: "***REMOVED***"
+                from: "+16266584299",
+                to: "+18183891298"
               })
               .then(function (response) { })
               .done();
 
             dcClient.once("ready", () => {
-              const channel = dcClient.channels.get("***REMOVED***");
+              const channel = dcClient.channels.get("603421256322121751");
               try {
                 channel.send(totalMessage);
               } catch (error) {
@@ -282,14 +282,14 @@ router.get("/api/noon-test", function (req, res) {
           client.messages
             .create({
               body: totalMessage,
-              from: "***REMOVED***",
-              to: "***REMOVED***"
+              from: "+16266584299",
+              to: "+18183891298"
             })
             .then(function (response) { })
             .done();
 
           dcClient.once("ready", () => {
-            const channel = dcClient.channels.get("***REMOVED***");
+            const channel = dcClient.channels.get("603421256322121751");
             try {
               channel.send(totalMessage);
             } catch (error) {

@@ -155,14 +155,14 @@ request('https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=2&exc
           client.messages
             .create({
               body: totalMessage,
-              from: "***REMOVED***",
-              to: "***REMOVED***"
+              from: "+16266584299",
+              to: "+18183891298"
             })
             .then(function(response) {})
             .done();
 
           dcClient.once("ready", () => {
-            const channel = dcClient.channels.get("***REMOVED***");
+            const channel = dcClient.channels.get("603421256322121751");
             try {
               channel.send(totalMessage);
             } catch (error) {
