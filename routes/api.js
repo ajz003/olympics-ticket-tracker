@@ -5,6 +5,7 @@ const axiosCookieJarSupport = require('axios-cookiejar-support').default;
 const tough = require('tough-cookie');
 var cheerio = require("cheerio");
 const client = require("twilio")(process.env.accountSid, process.env.authToken);
+var passport = require('passport')
 
 const Discord = require("discord.js");
 const { prefix } = require("./../config.json");
@@ -278,25 +279,25 @@ router.get("/api/noon-test", function (req, res) {
       } else {
         setTimeout(() => {
 
-            client.messages
-              .create({
-                body: totalMessage,
-                from: "***REMOVED***",
-                to: "***REMOVED***"
-              })
-              .then(function (response) { })
-              .done();
+          client.messages
+            .create({
+              body: totalMessage,
+              from: "***REMOVED***",
+              to: "***REMOVED***"
+            })
+            .then(function (response) { })
+            .done();
 
-            dcClient.once("ready", () => {
-              const channel = dcClient.channels.get("***REMOVED***");
-              try {
-                channel.send(totalMessage);
-              } catch (error) {
-                channel.send(console.error(error));
-              }
-            });
-            dcClient.login(process.env.DC_TOKEN);
-          
+          dcClient.once("ready", () => {
+            const channel = dcClient.channels.get("***REMOVED***");
+            try {
+              channel.send(totalMessage);
+            } catch (error) {
+              channel.send(console.error(error));
+            }
+          });
+          dcClient.login(process.env.DC_TOKEN);
+
 
         }, min + max);
       }
@@ -307,4 +308,26 @@ router.get("/api/noon-test", function (req, res) {
   scrapeSport(i);
 });
 
+function loggedIn(req, res, next) {
+  if (req.user) {
+      next();
+  } else {
+      res.redirect('/login');
+  }
+}
+
+router.get('/ping', (req, res) => {
+  return res.send('pong')
+})
+
+router.get('/orders', loggedIn, function(req, res, next) {
+  // req.user - will exist
+  // load user orders and render them
+});
+
+router.post('/login', 
+  passport.authenticate('local-login', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/test');
+  });
 module.exports = router;

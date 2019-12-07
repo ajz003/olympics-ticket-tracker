@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import Home from "./components/Home.js";
-import Header from "./components/Header.js";
-import logo from "./logo.svg";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from "./Header.js";
+import Hero from "./Hero.js";
+import HomeSection from "./HomeSection.js";
+import Login from "./Login.js";
+import logo from "./../logo.svg";
 
-
-import "./App.css";
+import "./Home.css";
 
 import {
   BrowserRouter as Router,
@@ -36,29 +36,25 @@ function timeToNextNoon() {
 }
 
 
-class App extends Component {
+class Home extends Component {
 
   render() {
     let message = timeToNextNoon();
     return (
-      <Router>
-      <Header />
-          <Route exact path="/">
-
-            <Home />
-          </Route>
-
-          <Route path="/about">
-          <h2>ABOUT</h2>
-          <p className="App-intro">
+        <div className="App">
+            <Hero />
+            <HomeSection
+              backgroundColor="grey-back"
+              h2="What is Olymkets?"
+            />
+            <Login />
+            <p className="App-intro">
               {message}
             </p>
-          </Route>
-
-      </Router>
+        </div>
     );
   }
 }
 
 
-export default App;
+export default Home;
