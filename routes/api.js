@@ -22,44 +22,9 @@ let sports = [
       "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=6&excludesoldout=False"
   },
   {
-    title: "Shooting",
-    url:
-      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=42&excludesoldout=False"
-  },
-  {
     title: "Sport Climbing",
     url:
       "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=1123&excludesoldout=False"
-  },
-  {
-    title: "Beach Volleyball",
-    url:
-      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=8&excludesoldout=False"
-  },
-  {
-    title: "Gymnastics - Artistic",
-    url:
-      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=22&excludesoldout=False"
-  },
-  {
-    title: "Gymnastics - Rhythmic",
-    url:
-      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=23&excludesoldout=False"
-  },
-  {
-    title: "Gymnastics - Trampoline",
-    url:
-      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=24&excludesoldout=False"
-  },
-  {
-    title: "MODERN PENTATHLON",
-    url:
-      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=28&excludesoldout=False"
-  },
-  {
-    title: "Tennis",
-    url:
-      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=35&excludesoldout=False"
   },
   {
     title: "Closing Ceremony",
@@ -72,11 +37,10 @@ router.get("/api/sports", function (req, res) {
   res.send(sports);
 });
 
-let totalMessage = "\n";
 
 router.get("/api/scrape-olympics", function (req, res) {
   let i = 0;
-
+  let totalMessage = "\n";
   let allResults = [];
   let allSportsSoldOut = true;
 
@@ -95,7 +59,6 @@ router.get("/api/scrape-olympics", function (req, res) {
 
       let sportTitle = $("span.discipline-title span.name").text();
       let sportIsAllSoldOut = true;
-      let textMessage = "";
 
       $(".session-info").each(function (i, element) {
         // Save an empty result object
@@ -127,22 +90,18 @@ router.get("/api/scrape-olympics", function (req, res) {
           if (ticketInfo.price !== "Sold Out" && sportIsAllSoldOut === true) {
             sportIsAllSoldOut = false;
             allSportsSoldOut = false;
-            textMessage += `${result.sportTitle} has tickets available at ${sports[iterator].url} !\n`;
+            totalMessage += `${result.sportTitle} has tickets available at ${sports[iterator].url} !\n`;
           }
 
           result.info.push(ticketInfo);
         });
 
-        console.log(result);
-
         results.results.push(result);
       });
 
       if (sportIsAllSoldOut === true) {
-        textMessage = `No ${sports[iterator].title} tickets available.\n`;
+        totalMessage += `No ${sports[iterator].title} tickets available.\n`;
       }
-
-      totalMessage += textMessage;
 
       allResults.push(results);
 
@@ -251,7 +210,7 @@ router.get("/api/noon-test", function (req, res) {
           result.info.push(ticketInfo);
         });
 
-        console.log(result);
+        console.log(result, "single result");
 
         results.results.push(result);
       });
@@ -278,7 +237,6 @@ router.get("/api/noon-test", function (req, res) {
         }, randInterval);
       } else {
         setTimeout(() => {
-
           client.messages
             .create({
               body: totalMessage,
@@ -298,6 +256,7 @@ router.get("/api/noon-test", function (req, res) {
           });
           dcClient.login(process.env.DC_TOKEN);
 
+          console.log(totalMessage, "final message")
 
         }, min + max);
       }
