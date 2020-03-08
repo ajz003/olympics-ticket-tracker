@@ -17,16 +17,6 @@ axiosCookieJarSupport(axios);
 
 let sports = [
   {
-    title: "Badminton",
-    url:
-      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=6&excludesoldout=False"
-  },
-  {
-    title: "Sport Climbing",
-    url:
-      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=1123&excludesoldout=False"
-  },
-  {
     title: "Closing Ceremony",
     url:
       "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=44&excludesoldout=False"
