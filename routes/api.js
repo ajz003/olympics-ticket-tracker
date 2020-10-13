@@ -20,7 +20,27 @@ let sports = [
     title: "Closing Ceremony",
     url:
       "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=44&excludesoldout=False"
-  }
+  },
+  {
+    title: "Sport Climbing",
+    url:
+      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=1123&excludesoldout=False"
+  },
+  {
+    title: "Beach Volleyball",
+    url:
+      "https://www.cosport.com/olympics/ticketsessiondetail.aspx?sportId=8&excludesoldout=False"
+  },
+  {
+    title: "Volleyball",
+    url:
+      "https://cosport.com/olympics/ticketsessiondetail.aspx?sportId=37&excludesoldout=False"
+  },
+  {
+    title: "Tennis",
+    url:
+      "https://cosport.com/olympics/ticketsessiondetail.aspx?sportId=35&excludesoldout=False"
+  },
 ];
 
 router.get("/api/sports", function (req, res) {
